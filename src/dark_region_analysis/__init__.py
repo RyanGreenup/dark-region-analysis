@@ -1,4 +1,4 @@
-"""dark-region-analysis: Analysis of dark regions on a white rectangle."""
+"""Analyze dark regions on a white rectangle."""
 
 from __future__ import annotations
 

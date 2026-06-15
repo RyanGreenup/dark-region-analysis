@@ -5,6 +5,10 @@ description = "Analysis of dark regions on a white rectangle"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "numpy>=2.2",
+    "pillow>=11",
+    "scikit-image>=0.25",
+    "scipy>=1.14",
     "typer>=0.12",
 ]
 

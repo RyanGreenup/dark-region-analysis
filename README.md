@@ -1,11 +1,11 @@
 # dark-region-analysis
 
-Analysis of dark regions on a white rectangle
+Detect dark regions on a white rectangle surrounded by bright textured blobs.
 
-A Python Typer CLI scaffolded with [uv](https://docs.astral.sh/uv/), linted and formatted
-with [ruff](https://docs.astral.sh/ruff/) (`select = ["ALL"]`), type-checked with
-[pyright](https://microsoft.github.io/pyright/) in strict mode, and tested with pytest +
-coverage. The package lives at `src/dark_region_analysis/`.
+The CLI adapts the research prototype in `sam-overlay` into a small Python
+package with typed, documented modules. It detects the smooth white rectangle,
+finds dark holes enclosed by that rectangle, reports measurements, and writes an
+annotated image.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ coverage. The package lives at `src/dark_region_analysis/`.
 
 ```bash
 uv sync --all-extras --dev          # create .venv and install dev tools
-uv run dark-region-analysis greet Ada # run the exemplar CLI command
+uv run dark-region-analysis --help
 just check                          # fmt + lint + type + test
 git init && uv run pre-commit install
 ```
@@ -27,8 +27,24 @@ The generated command is installed from `[project.scripts]`:
 
 ```bash
 uv run dark-region-analysis --help
-uv run dark-region-analysis greet Ada
+uv run dark-region-analysis detect input.jpeg annotated.jpeg
+uv run dark-region-analysis regions input.jpeg annotated.jpeg
+uv run dark-region-analysis regions input.jpeg annotated.jpeg --report-format json
 ```
+
+`detect` finds the white rectangle and saves a bounding-box annotation.
+
+`regions` finds dark regions inside the rectangle, prints their measurements,
+and saves an annotation with labels and lines from the rectangle center.
+
+Key options:
+
+| Option | Default | Meaning |
+|--------|---------|---------|
+| `--dark-value` | `0.85` | Maximum normalized brightness for a dark mark |
+| `--min-area-frac` | `0.0002` | Minimum region area as a fraction of rectangle area |
+| `--max-aspect` | `3.0` | Maximum bounding-box aspect ratio for accepted regions |
+| `--report-format` | `plain` | Output format: `plain`, `json`, or `csv` |
 
 ## Tasks
 
@@ -48,12 +64,19 @@ Run any underlying tool directly with `uv run <tool>` if you do not have `just`.
 
 ```
 src/dark_region_analysis/   package source
+src/dark_region_analysis/models.py
+                          measurement dataclasses
+src/dark_region_analysis/detection.py
+                          pure image-analysis functions
+src/dark_region_analysis/annotation.py
+                          Pillow drawing helpers
+src/dark_region_analysis/reporting.py
+                          plain, JSON, and CSV reports
 src/dark_region_analysis/cli.py
-                          Typer app, exemplar command, and console entry point
+                          Typer commands and console entry point
 tests/                    pytest suite
 pyproject.toml            project + ruff + pyright + pytest + coverage config
 .pre-commit-config.yaml   ruff + uv-lock hooks
-.github/workflows/ci.yml  CI: format check, lint, typecheck, test
 ```
 
 ## Notes
