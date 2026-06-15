@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@source "../../templates/**/*.html";
+
+@theme {
+  --font-serif: "Georgia", "Times New Roman", serif;
+}
+
+::selection {
+  background: #facc15;
+  color: #171713;
+}

@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - analysis-instance:/app/instance
+    environment:
+      FLASK_SECRET_KEY: "change-me-for-shared-deployments"
+
+volumes:
+  analysis-instance:

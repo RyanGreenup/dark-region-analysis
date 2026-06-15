@@ -37,6 +37,28 @@ uv run dark-region-analysis regions input.jpeg annotated.jpeg --report-format js
 `regions` finds dark regions inside the rectangle, prints their measurements,
 and saves an annotation with labels and lines from the rectangle center.
 
+## Web UI
+
+The Flask UI lets a colleague upload one image and download the annotated image
+and CSV measurements.
+
+```bash
+uv sync --all-extras --dev
+just tailwind-install
+just tailwind-build
+just web
+```
+
+Open `http://localhost:8000`.
+
+The app writes uploads, generated images, and CSV files under `instance/jobs/`.
+
+Docker:
+
+```bash
+docker compose up --build
+```
+
 Key options:
 
 | Option | Default | Meaning |
@@ -74,6 +96,12 @@ src/dark_region_analysis/reporting.py
                           plain, JSON, and CSV reports
 src/dark_region_analysis/cli.py
                           Typer commands and console entry point
+src/dark_region_analysis/web.py
+                          Flask upload UI
+src/dark_region_analysis/templates/
+                          Jinja templates
+src/dark_region_analysis/static/
+                          Tailwind source and built CSS
 tests/                    pytest suite
 pyproject.toml            project + ruff + pyright + pytest + coverage config
 .pre-commit-config.yaml   ruff + uv-lock hooks

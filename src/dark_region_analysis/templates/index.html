@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dark Region Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/app.css') }}">
+  </head>
+  <body class="min-h-screen bg-[#f3efe4] text-[#171713] antialiased">
+    <main class="relative isolate min-h-screen overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_18%,rgba(14,165,233,0.20),transparent_28%),radial-gradient(circle_at_80%_10%,rgba(220,38,38,0.16),transparent_26%),linear-gradient(135deg,rgba(23,23,19,0.08)_0_1px,transparent_1px_18px)]"></div>
+      <section class="mx-auto grid min-h-screen w-full max-w-7xl items-center gap-10 px-6 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:px-10">
+        <div class="space-y-8">
+          <div class="inline-flex items-center gap-3 border border-[#171713] bg-[#fffaf0]/80 px-4 py-2 text-xs font-black uppercase tracking-[0.34em] shadow-[5px_5px_0_#171713]">
+            <span class="h-2 w-2 rounded-full bg-red-600"></span>
+            Research instrument
+          </div>
+
+          <div class="space-y-5">
+            <h1 class="max-w-3xl font-serif text-5xl font-black leading-[0.92] tracking-[-0.06em] text-[#171713] sm:text-7xl">
+              Dark region analysis on white fields.
+            </h1>
+            <p class="max-w-xl text-lg leading-8 text-[#4b473d]">
+              Upload one image. The detector isolates the smooth white rectangle,
+              measures dark enclosed regions, and returns an annotated image plus CSV.
+            </p>
+          </div>
+
+          <form action="{{ url_for('analyze') }}" method="post" enctype="multipart/form-data" class="group max-w-xl border-2 border-[#171713] bg-[#fffaf0] p-4 shadow-[10px_10px_0_#171713]">
+            <label class="block">
+              <span class="mb-3 block text-sm font-black uppercase tracking-[0.25em] text-[#171713]">Image upload</span>
+              <input name="image" type="file" accept="image/*" required class="block w-full cursor-pointer border border-[#171713] bg-white text-sm file:mr-4 file:border-0 file:bg-[#171713] file:px-5 file:py-4 file:text-sm file:font-black file:uppercase file:tracking-[0.18em] file:text-[#fffaf0] hover:file:bg-[#0f7490]">
+            </label>
+            <button type="submit" class="mt-4 w-full border-2 border-[#171713] bg-[#0ea5b7] px-6 py-4 text-left text-sm font-black uppercase tracking-[0.28em] text-[#071012] shadow-[5px_5px_0_#171713] transition duration-150 hover:-translate-y-0.5 hover:translate-x-0.5 hover:shadow-[3px_3px_0_#171713]">
+              Analyze image
+            </button>
+          </form>
+
+          {% if error %}
+            <div class="max-w-xl border-2 border-red-900 bg-red-100 px-5 py-4 font-bold text-red-950 shadow-[6px_6px_0_#7f1d1d]">
+              {{ error }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="relative">
+          <div class="absolute -left-4 -top-4 h-24 w-24 border-2 border-[#171713] bg-red-600"></div>
+          <div class="relative border-2 border-[#171713] bg-[#171713] p-3 shadow-[14px_14px_0_rgba(23,23,19,0.25)]">
+            {% if result %}
+              <div class="grid gap-3">
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-[#fffaf0] px-4 py-3">
+                  <h2 class="text-sm font-black uppercase tracking-[0.28em]">Analysis output</h2>
+                  <a href="{{ result.csv_url }}" download class="border border-[#171713] bg-[#facc15] px-4 py-2 text-xs font-black uppercase tracking-[0.18em] hover:bg-[#fde047]">
+                    Download CSV
+                  </a>
+                </div>
+                <img src="{{ result.image_url }}" alt="Annotated analysis output" class="max-h-[62vh] w-full bg-white object-contain">
+                <details class="bg-[#fffaf0] p-4">
+                  <summary class="cursor-pointer text-sm font-black uppercase tracking-[0.22em]">Preview CSV</summary>
+                  <pre class="mt-3 max-h-56 overflow-auto bg-[#171713] p-4 text-xs leading-6 text-[#d9ffef]">{{ result.csv_text }}</pre>
+                </details>
+              </div>
+            {% else %}
+              <div class="grid min-h-[520px] place-items-center bg-[#fffaf0] p-8">
+                <div class="max-w-sm text-center">
+                  <div class="mx-auto mb-6 h-40 w-40 rounded-full border-[18px] border-[#0ea5b7] bg-white shadow-[0_0_0_2px_#171713,12px_12px_0_#facc15]"></div>
+                  <p class="text-sm font-black uppercase tracking-[0.24em] text-[#575246]">
+                    Output image and CSV appear here after analysis.
+                  </p>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

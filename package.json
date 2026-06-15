@@ -1,0 +1,13 @@
+{
+  "name": "dark-region-analysis-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/dark_region_analysis/static/src/app.css -o ./src/dark_region_analysis/static/dist/app.css --minify",
+    "watch:css": "tailwindcss -i ./src/dark_region_analysis/static/src/app.css -o ./src/dark_region_analysis/static/dist/app.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0"
+  }
+}
