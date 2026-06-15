@@ -1,0 +1,13 @@
+[env]
+'_'.file = { path = ".env.yaml" }
+
+[settings]
+sops.rops = false   # Use the real sops CLI instead of mise's builtin Rust parser
+experimental = true
+
+[tools]
+sops = "latest"
+starship = "latest"
+usage = "latest"
+usql = "latest"
+age = "latest"

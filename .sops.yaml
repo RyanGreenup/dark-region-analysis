@@ -1,0 +1,26 @@
+creation_rules:
+  - path_regex: '\.env$'
+    age: "age1akugayf5a9uw432mtvh9zlw7vz93j0te2f9frtkar8uwmlfl54lsjelvar,age1ahrtjay3f9u72y6wsrgca4xkrev7xcd9azrg39lc2m2vpfk9mussgk4092"
+  - path_regex: \.env\.yaml$
+    age: >-
+      age1akugayf5a9uw432mtvh9zlw7vz93j0te2f9frtkar8uwmlfl54lsjelvar,
+      age1ahrtjay3f9u72y6wsrgca4xkrev7xcd9azrg39lc2m2vpfk9mussgk4092
+  - path_regex: 'deploy/k8s/\.config/.*\.sops\.ya?ml$'
+    age: >-
+      age1akugayf5a9uw432mtvh9zlw7vz93j0te2f9frtkar8uwmlfl54lsjelvar,
+      age1ahrtjay3f9u72y6wsrgca4xkrev7xcd9azrg39lc2m2vpfk9mussgk4092,
+      age1dpsm76jz5904jt7pggmcfqltk7xafpg8csfvqsgnvunlp8dz65hsr6n40u
+
+  # k8s manifests, with flux key
+  - path_regex: 'deploy/k8s/.*\.ya?ml$'
+    encrypted_regex: ^(data|stringData)$
+    age: >-
+      age1ggghycz9e30pgkcg08sr6l62vwv0wevf528r8tlx38ghufxagfrq46gm6w,
+      age1hu7gu2gspfe7dqlllerk9kl2and0f9pphv8jkaj2r2fgkdnspq7qtzanwz,
+      age1akugayf5a9uw432mtvh9zlw7vz93j0te2f9frtkar8uwmlfl54lsjelvar,
+      age1ahrtjay3f9u72y6wsrgca4xkrev7xcd9azrg39lc2m2vpfk9mussgk4092,
+      age1dpsm76jz5904jt7pggmcfqltk7xafpg8csfvqsgnvunlp8dz65hsr6n40u
+
+# Map of keys
+
+# Flux: age1dpsm76jz5904jt7pggmcfqltk7xafpg8csfvqsgnvunlp8dz65hsr6n40u
